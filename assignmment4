@@ -1,137 +1,74 @@
-q1 .Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+1. Weather Observation Station 8 - City Name Lengths
 
-Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+Problem: Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths. If there are multiple cities with the same length, choose the lexicographically first one.
 
-SELECT CITY.Name
-FROM CITY
-JOIN COUNTRY ON CITY.CountryCode = COUNTRY.Code
-WHERE COUNTRY.Continent = 'Africa';
+Table Structure:
+STATION (ID, CITY, STATE, LAT_N, LONG_W)
 
-Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+Solution:
+-- Shortest city name (SELECT CITY, LENGTH(CITY) as length FROM STATION ORDER BY LENGTH(CITY) ASC, CITY ASC LIMIT 1) UNION ALL -- Longest city name (SELECT CITY, LENGTH(CITY) as length FROM STATION ORDER BY LENGTH(CITY) DESC, CITY ASC LIMIT 1);
+Sample Input/Output:
+Input: STATION table: ID | CITY | STATE | LAT_N | LONG_W 1 | New York | NY | 40.71 | 74.01 2 | LA | CA | 34.05 | 118.24 3 | San Francisco | CA | 37.77 | 122.42 Output: LA 2 San Francisco 13
 
-Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+2. Population Density Difference
 
-q2.
-Consider  and  to be two points on a 2D plane where  are the respective minimum and maximum values of Northern Latitude (LAT_N) and  are the respective minimum and maximum values of Western Longitude (LONG_W) in STATION.
+Problem: Query the difference between the maximum and minimum populations in CITY.
 
-Query the Euclidean Distance between points  and  and format your answer to display  decimal digits.
+Table Structure:
+CITY (ID, NAME, COUNTRYCODE, DISTRICT, POPULATION)
 
-SELECT ROUND(SQRT(POWER(MAX(LAT_N) - MIN(LAT_N), 2) + POWER(MAX(LONG_W) - MIN(LONG_W), 2)), 4) FROM STATION;
+Solution:
+SELECT MAX(POPULATION) - MIN(POPULATION) AS population_difference FROM CITY;
 
-SELECT ROUND(LAT_N, 4)
-FROM (
-    SELECT LAT_N, 
-           ROW_NUMBER() OVER (ORDER BY LAT_N) AS rn,
-           COUNT(*) OVER () AS cnt
-    FROM STATION
-) AS sub
-WHERE rn IN (FLOOR((cnt + 1)/2), CEIL((cnt + 1)/2));
+Sample Input/Output:
+Input: CITY table: ID | NAME | POPULATION 1 | Mumbai | 12691836 2 | Delhi | 16753235 3 | Bangalore | 8443675 4 | Chennai | 4681087 Output: population_difference 12072148
 
-q3.Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+3. Weather Observation Station 19 - Euclidean Distance
 
-Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
-
-SELECT ci.Name
-FROM CITY ci
-JOIN COUNTRY co ON ci.CountryCode = co.Code
-WHERE co.Continent = 'Africa';
-
-Compiler Message
-Success
-
-q4.Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.
-
-Input Format
-
-SELECT DISTINCT CITY FROM STATION WHERE LOWER(SUBSTR(CITY, 1, 1)) IN ('a', 'e', 'i', 'o', 'u') AND LOWER(SUBSTR(CITY, -1, 1)) IN ('a', 'e', 'i', 'o', 'u');
-
-Compiler Message
-Success
-Input (stdin)
-INPUT
-Expected Output
-Acme 
-Aguanga 
-Alba 
-Aliso Viejo 
-Alpine 
-Amazonia 
-Amo 
-Andersonville 
-Archie 
-Arispe 
-Arkadelphia 
-Atlantic Mine 
-East China 
-East Irvine 
-Eastlake 
-Eleele 
-Elm Grove 
-Eriline 
-Ermine 
-Eskridge {-truncated-}
-AuthorAvmnuSng
-DifficultyEasy
-Max Score15
-Submitted By1315870
-Need Help?
-View discussions
-View top submissions
-rate this challenge
-
-q5.Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard! Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
-
-SELECT s.hacker_id, h.name
-FROM Submissions s
-JOIN Challenges c ON s.challenge_id = c.challenge_id
-JOIN Difficulty d ON c.difficulty_level = d.difficulty_level
-JOIN Hackers h ON s.hacker_id = h.hacker_id
-WHERE s.score = d.score
-GROUP BY s.hacker_id, h.name
-HAVING COUNT(DISTINCT s.challenge_id) > 1
-ORDER BY COUNT(DISTINCT s.challenge_id) DESC, s.hacker_id ASC;
-
-q6.SELECT MAX(POPULATION) - MIN(POPULATION) FROM CITY;
-q7.SELECT w.id, wp.age, w.coins_needed, w.power
-FROM Wands w
-JOIN Wands_Property wp ON w.code = wp.code
-WHERE wp.is_evil = 0
-AND w.coins_needed = (
-    SELECT MIN(w1.coins_needed)
-    FROM Wands w1
-    JOIN Wands_Property wp1 ON w1.code = wp1.code
-    WHERE wp1.is_evil = 0
-    AND w1.power = w.power
-    AND wp1.age = wp.age
-)
-ORDER BY w.power DESC, wp.age DESC;
-q8.SELECT h.hacker_id, h.name, SUM(max_scores.max_score) AS total_score
-FROM Hackers h
-JOIN (
-    SELECT hacker_id, challenge_id, MAX(score) AS max_score
-    FROM Submissions
-    GROUP BY hacker_id, challenge_id
-) AS max_scores
-ON h.hacker_id = max_scores.hacker_id
-GROUP BY h.hacker_id, h.name
-HAVING total_score > 0
-ORDER BY total_score DESC, h.hacker_id ASC;
-q9.SELECT
-  CASE
-    WHEN g.Grade < 8 THEN 'NULL'
-    ELSE s.Name
-  END AS Name,
-  g.Grade,
-  s.Marks
-FROM Students s
-JOIN Grades g
-  ON s.Marks BETWEEN g.Min_Mark AND g.Max_Mark
-ORDER BY
-  g.Grade DESC,
-  CASE
-    WHEN g.Grade < 8 THEN s.Marks
-    ELSE s.Name
-  END;
-q10.
+Problem: Calculate the Euclidean Distance between two points P1(min_lat, min_long) and P2(max_lat, max_long) and format to 4 decimal places.
+Solution:
+SELECT ROUND( SQRT( POWER(MAX(LAT_N) - MIN(LAT_N), 2) + POWER(MAX(LONG_W) - MIN(LONG_W), 2) ), 4 ) AS euclidean_distance FROM STATION;
 
 
+4. Weather Observation Station 20 - Median Calculation
+
+Problem: Query the median of Northern Latitudes (LAT_N) from STATION and round to 4 decimal places.
+Solution:
+-- Method 1: Using ROW_NUMBER (More efficient) SELECT ROUND(AVG(LAT_N), 4) AS median_lat FROM ( SELECT LAT_N, ROW_NUMBER() OVER (ORDER BY LAT_N) as row_num, COUNT(*) OVER() as total_count FROM STATION ) ranked WHERE row_num IN (FLOOR((total_count + 1) / 2), CEIL((total_count + 1) / 2)); -- Method 2: Traditional approach SELECT ROUND(LAT_N, 4) AS median_lat FROM STATION S1 WHERE (SELECT COUNT(LAT_N) FROM STATION S2 WHERE S2.LAT_N <= S1.LAT_N) = (SELECT COUNT(LAT_N) FROM STATION S3 WHERE S3.LAT_N >= S1.LAT_N);
+
+5. African Cities
+
+Problem: Query the names of all cities where the CONTINENT is 'Africa'.
+
+Solution:
+SELECT CITY.NAME FROM CITY JOIN COUNTRY ON CITY.COUNTRYCODE = COUNTRY.CODE WHERE COUNTRY.CONTINENT = 'Africa';
+
+6. The Report - Grade Analysis
+
+Problem: Generate a report with Name, Grade, and Mark. Hide names for grades < 8, show "NULL" instead.
+
+Solution:
+SELECT CASE WHEN G.GRADE < 8 THEN 'NULL' ELSE S.NAME END AS NAME, G.GRADE, S.MARKS FROM STUDENTS S JOIN GRADES G ON S.MARKS BETWEEN G.MIN_MARK AND G.MAX_MARK ORDER BY G.GRADE DESC, CASE WHEN G.GRADE >= 8 THEN S.NAME END ASC, CASE WHEN G.GRADE < 8 THEN S.MARKS END ASC;
+Grade Distribution Analysis
+
+7. Top Competitors
+Problem: Find hackers who achieved full scores for more than one challenge.
+
+Solution:
+SELECT H.HACKER_ID, H.NAME FROM HACKERS H JOIN SUBMISSIONS S ON H.HACKER_ID = S.HACKER_ID JOIN CHALLENGES C ON S.CHALLENGE_ID = C.CHALLENGE_ID JOIN DIFFICULTY D ON C.DIFFICULTY_LEVEL = D.DIFFICULTY_LEVEL WHERE S.SCORE = D.SCORE GROUP BY H.HACKER_ID, H.NAME HAVING COUNT(S.CHALLENGE_ID) > 1 ORDER BY COUNT(S.CHALLENGE_ID) DESC, H.HACKER_ID ASC;
+
+8. Ollivander's Inventory
+
+Problem: Find the minimum cost wands for each power and age combination (non-evil wands only).
+
+Solution:
+SELECT W.ID, WP.AGE, W.COINS_NEEDED, W.POWER FROM WANDS W JOIN WANDS_PROPERTY WP ON W.CODE = WP.CODE WHERE WP.IS_EVIL = 0 AND W.COINS_NEEDED = ( SELECT MIN(W2.COINS_NEEDED) FROM WANDS W2 JOIN WANDS_PROPERTY WP2 ON W2.CODE = WP2.CODE WHERE WP2.IS_EVIL = 0 AND W2.POWER = W.POWER AND WP2.AGE = WP.AGE ) ORDER BY W.POWER DESC, WP.AGE DESC;
+
+9. Contest Leaderboard
+
+Problem: Calculate total score for each hacker (sum of maximum scores per challenge), exclude zero scores.
+
+Solution:
+SELECT H.HACKER_ID, H.NAME, SUM(max_scores.max_score) AS total_score FROM HACKERS H JOIN ( SELECT HACKER_ID, CHALLENGE_ID, MAX(SCORE) AS max_score FROM SUBMISSIONS GROUP BY HACKER_ID, CHALLENGE_ID ) max_scores ON H.HACKER_ID = max_scores.HACKER_ID GROUP BY H.HACKER_ID, H.NAME HAVING total_score > 0 ORDER BY total_score DESC, H.HACKER_ID ASC;
+
+10.contest leaderboard
