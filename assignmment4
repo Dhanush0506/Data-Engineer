@@ -1,0 +1,137 @@
+q1 .Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+
+SELECT CITY.Name
+FROM CITY
+JOIN COUNTRY ON CITY.CountryCode = COUNTRY.Code
+WHERE COUNTRY.Continent = 'Africa';
+
+Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+
+q2.
+Consider  and  to be two points on a 2D plane where  are the respective minimum and maximum values of Northern Latitude (LAT_N) and  are the respective minimum and maximum values of Western Longitude (LONG_W) in STATION.
+
+Query the Euclidean Distance between points  and  and format your answer to display  decimal digits.
+
+SELECT ROUND(SQRT(POWER(MAX(LAT_N) - MIN(LAT_N), 2) + POWER(MAX(LONG_W) - MIN(LONG_W), 2)), 4) FROM STATION;
+
+SELECT ROUND(LAT_N, 4)
+FROM (
+    SELECT LAT_N, 
+           ROW_NUMBER() OVER (ORDER BY LAT_N) AS rn,
+           COUNT(*) OVER () AS cnt
+    FROM STATION
+) AS sub
+WHERE rn IN (FLOOR((cnt + 1)/2), CEIL((cnt + 1)/2));
+
+q3.Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+
+SELECT ci.Name
+FROM CITY ci
+JOIN COUNTRY co ON ci.CountryCode = co.Code
+WHERE co.Continent = 'Africa';
+
+Compiler Message
+Success
+
+q4.Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.
+
+Input Format
+
+SELECT DISTINCT CITY FROM STATION WHERE LOWER(SUBSTR(CITY, 1, 1)) IN ('a', 'e', 'i', 'o', 'u') AND LOWER(SUBSTR(CITY, -1, 1)) IN ('a', 'e', 'i', 'o', 'u');
+
+Compiler Message
+Success
+Input (stdin)
+INPUT
+Expected Output
+Acme 
+Aguanga 
+Alba 
+Aliso Viejo 
+Alpine 
+Amazonia 
+Amo 
+Andersonville 
+Archie 
+Arispe 
+Arkadelphia 
+Atlantic Mine 
+East China 
+East Irvine 
+Eastlake 
+Eleele 
+Elm Grove 
+Eriline 
+Ermine 
+Eskridge {-truncated-}
+AuthorAvmnuSng
+DifficultyEasy
+Max Score15
+Submitted By1315870
+Need Help?
+View discussions
+View top submissions
+rate this challenge
+
+q5.Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard! Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
+
+SELECT s.hacker_id, h.name
+FROM Submissions s
+JOIN Challenges c ON s.challenge_id = c.challenge_id
+JOIN Difficulty d ON c.difficulty_level = d.difficulty_level
+JOIN Hackers h ON s.hacker_id = h.hacker_id
+WHERE s.score = d.score
+GROUP BY s.hacker_id, h.name
+HAVING COUNT(DISTINCT s.challenge_id) > 1
+ORDER BY COUNT(DISTINCT s.challenge_id) DESC, s.hacker_id ASC;
+
+q6.SELECT MAX(POPULATION) - MIN(POPULATION) FROM CITY;
+q7.SELECT w.id, wp.age, w.coins_needed, w.power
+FROM Wands w
+JOIN Wands_Property wp ON w.code = wp.code
+WHERE wp.is_evil = 0
+AND w.coins_needed = (
+    SELECT MIN(w1.coins_needed)
+    FROM Wands w1
+    JOIN Wands_Property wp1 ON w1.code = wp1.code
+    WHERE wp1.is_evil = 0
+    AND w1.power = w.power
+    AND wp1.age = wp.age
+)
+ORDER BY w.power DESC, wp.age DESC;
+q8.SELECT h.hacker_id, h.name, SUM(max_scores.max_score) AS total_score
+FROM Hackers h
+JOIN (
+    SELECT hacker_id, challenge_id, MAX(score) AS max_score
+    FROM Submissions
+    GROUP BY hacker_id, challenge_id
+) AS max_scores
+ON h.hacker_id = max_scores.hacker_id
+GROUP BY h.hacker_id, h.name
+HAVING total_score > 0
+ORDER BY total_score DESC, h.hacker_id ASC;
+q9.SELECT
+  CASE
+    WHEN g.Grade < 8 THEN 'NULL'
+    ELSE s.Name
+  END AS Name,
+  g.Grade,
+  s.Marks
+FROM Students s
+JOIN Grades g
+  ON s.Marks BETWEEN g.Min_Mark AND g.Max_Mark
+ORDER BY
+  g.Grade DESC,
+  CASE
+    WHEN g.Grade < 8 THEN s.Marks
+    ELSE s.Name
+  END;
+q10.
+
+
