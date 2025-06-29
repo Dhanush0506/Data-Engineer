@@ -1,0 +1,1 @@
+{ "name": "SinkIncremental", "type": "AzureSqlTable" }

@@ -1,0 +1,1 @@
+Use retry policies and wait activities to handle transient failures.
