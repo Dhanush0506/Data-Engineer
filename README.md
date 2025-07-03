@@ -5,12 +5,12 @@ Each week focuses on hands-on tasks covering key technologies and concepts used 
 ## 📦 Assignment Breakdown
 
 Each folder is organized by the week of the assignment:
-- `prakash_week1_assignment/` – Week 1
-- `celebal_assignment_week2/` – Week 2
-- `prakash_assignment_week3/` – Week 3
-- `prakash_week4_assignment/` – Week 4
-- `prakash_week5_assignment/` – Week 5
-- `prakash_week6_assignment/` – Week 6
+- `CVDhanush_Assignment1/` – Week 1
+- `CVDhanush_Assignment2/` – Week 2
+- `CVDhanush_Assignment3/` – Week 3
+- `CVDhanush_Assignment4/` – Week 4
+- `CVDhanush_Assignment5/` – Week 5
+- `CVDhanush_Assignment6/` – Week 6
 
 ---
 
