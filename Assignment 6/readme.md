@@ -19,11 +19,11 @@ These components together form the foundation of reliable and scalable cloud-bas
 
 | File Name         | Description |
 |------------------|-------------|
-| [`solution1.md`](Solution1.md) | Configure Self-hosted Integration Runtime and load data from a local server into Azure SQL Database. |
-| [`solution2.md`](Solution2.md) | Set up FTP/SFTP connection and create a pipeline to extract data in ADF. |
-| [`solution3.md`](Solution3.md) | Design an incremental data load pipeline with watermarking/change tracking and daily automation. |
-| [`solution4.md`](Solution4.md) | Automate a pipeline to trigger on the last Saturday of every month using custom time-based triggers. |
-| [`solution5.md`](Solution5.md) | Implement retry logic to handle transient failures during data extraction and processing. |
+| [`Solution1.md`](Solution1.md) | Configure Self-hosted Integration Runtime and load data from a local server into Azure SQL Database. |
+| [`Solution2.md`](Solution2.md) | Set up FTP/SFTP connection and create a pipeline to extract data in ADF. |
+| [`Solution3.md`](Solution3.md) | Design an incremental data load pipeline with watermarking/change tracking and daily automation. |
+| [`Solution4.md`](Solution4.md) | Automate a pipeline to trigger on the last Saturday of every month using custom time-based triggers. |
+| [`Solution5.md`](Solution5.md) | Implement retry logic to handle transient failures during data extraction and processing. |
 
 ---
 
