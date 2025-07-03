@@ -1,1 +1,0 @@
-{ "name": "PipelineWithRetry", "activities": [{ "name": "RetryActivity", "type": "Copy", "policy": { "retry": 3 } }] }
