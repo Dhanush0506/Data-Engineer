@@ -29,9 +29,4 @@ These components together form the foundation of reliable and scalable cloud-bas
 
 Feel free to explore each file for detailed implementation steps and explanations.
 
-## 👨‍💻 Author
-
-**Prakash Pandey**  
-📧 [LinkedIn](https://www.linkedin.com/in/prakash-pandey-2827522b1/)  
-🛠️ GitHub: [@prakashpandey16](https://github.com/prakashpandey16)
 
