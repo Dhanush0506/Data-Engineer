@@ -23,8 +23,3 @@ each week includes **hands-on tasks** focused on key tools and concepts such as:
 - python
 
 
-## 👨‍💻 Author
-
-**Prakash Pandey**  
-🔗 [GitHub](https://github.com/prakashpandey16)  
-🔗 [LinkedIn](https://www.linkedin.com/in/prakash-pandey-2827522b1/)
