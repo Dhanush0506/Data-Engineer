@@ -50,10 +50,4 @@ Project Root/
 
 
 
-## 👨‍💻 Author
-
-**Prakash Pandey** 
-
-- 🔗 [GitHub](https://github.com/prakashpandey16)  
-- 🔗 [LinkedIn](https://www.linkedin.com/in/prakash-pandey-2827522b1/)
 
