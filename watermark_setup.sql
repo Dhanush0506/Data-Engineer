@@ -1,1 +1,0 @@
-CREATE TABLE watermark_log (table_name VARCHAR(50), last_run DATETIME);
