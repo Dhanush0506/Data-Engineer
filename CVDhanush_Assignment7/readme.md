@@ -14,7 +14,7 @@ I have 3 types of CSV files stored in a Data Lake folder, and my goal is to:
 
 | File Example                       | Load Target Table | Transformation Needed                                        |
 | ---------------------------------- | ----------------- | ------------------------------------------------------------ |
-| `CUST_MSTR_20191112.csv`           | `CUST_MSTR`       | ➕ Add `date` column from filename → `2019-11-12`             |
+| `CUSTOMER_MASTER_20191112.csv`           | `CUSTOMER_MASTER` | ➕ Add `date` column from filename → `2019-11-12`             |
 | `master_child_export-20191112.csv` | `master_child`    | ➕ Add `date` → `2019-11-12`<br>➕ Add `date_key` → `20191112` |
 | `H_ECOM_ORDER.csv`                 | `H_ECOM_Orders`   | ✅ Load file **as-is** (no transformation needed)             |
 
@@ -72,18 +72,18 @@ for file in files:
 
 ---
 
-## ✅ Step 3: Handle `CUST_MSTR_YYYYMMDD.csv` Files
+## ✅ Step 3: Handle `CUSTOMER_MASTER_YYYYMMDD.csv` Files
 
 In this step:
 
-* I filter files starting with `CUST_MSTR_`
+* I filter files starting with `CUSTOMER_MASTER_`
 * Extract the date from the filename and format it as `YYYY-MM-DD`
 * Add the extracted date as a new column
-* Truncate the `CUST_MSTR` table and load the updated data
+* Truncate the `CUSTOMER_MASTER` table and load the updated data
 
 ```python
-    if filename.startswith("CUST_MSTR_") and filename.endswith(".csv"):
-        match = re.search(r"CUST_MSTR_(\d{8})\.csv", filename)
+    if filename.startswith("CUSTOMER_MASTER_") and filename.endswith(".csv"):
+        match = re.search(r"CUSTOMER_MASTER_(\d{8})\.csv", filename)
         if match:
             date_raw = match.group(1)
             date_fmt = f"{date_raw[:4]}-{date_raw[4:6]}-{date_raw[6:]}"
@@ -91,10 +91,10 @@ In this step:
             df = spark.read.option("header", "true").csv(file_path)
             df = df.withColumn("date", lit(date_fmt))
 
-            spark.sql("TRUNCATE TABLE CUST_MSTR")
-            df.write.jdbc(url=jdbc_url, table="CUST_MSTR", mode="append", properties=jdbc_props)
+            spark.sql("TRUNCATE TABLE CUSTOMER_MASTER")
+            df.write.jdbc(url=jdbc_url, table="CUSTOMER_MASTER", mode="append", properties=jdbc_props)
 
-            print(f"✅ Loaded: {filename} into CUST_MSTR")
+            print(f"✅ Loaded: {filename} into CUSTOMER_MASTER")
 ```
 
 ---
@@ -148,11 +148,11 @@ In this final step:
 
 ## 📌 Daily ETL Summary
 
-| File Name Example                  | What I Did                                            | Target Table    |
-| ---------------------------------- | ----------------------------------------------------- | --------------- |
-| `CUST_MSTR_20191112.csv`           | ➕ Added `date`, 🧹 truncated old data, ⬇️ loaded file | `CUST_MSTR`     |
+| File Name Example                  | What I Did                                              | Target Table    |
+| ---------------------------------- | -----------------------------------------------------   | --------------- |
+| `CUSTOMER_MASTER_20191112.csv`     | ➕ Added `date`, 🧹 truncated old data, ⬇️ loaded file | `CUSTOMER_MASTER`|
 | `master_child_export-20191112.csv` | ➕ Added `date` & `date_key`, 🧹 truncated, ⬇️ loaded  | `master_child`  |
-| `H_ECOM_ORDER.csv`                 | ✅ Loaded as-is, 🧹 truncated old data                 | `H_ECOM_Orders` |
+| `H_ECOM_ORDER.csv`                 | ✅ Loaded as-is, 🧹 truncated old data                  | `H_ECOM_Orders` |
 
 ---
 
@@ -167,5 +167,3 @@ In this final step:
 
 ---
 
-**Author:** Prakash Pandey  
-**LinkedIn:** [Prakash Pandey](https://www.linkedin.com/in/prakash-pandey-2827522b1/)
