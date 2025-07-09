@@ -1,0 +1,118 @@
+{
+	"name": "FetchCountryDataPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEachCountry",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.CountryList",
+						"type": "Expression"
+					},
+					"batchCount": 1,
+					"activities": [
+						{
+							"name": "GetCountryData",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "GET",
+								"url": {
+									"value": "https://restcountries.com/v3.1/name/@{item()}",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "CopyCountryData",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "GetCountryData",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "JsonSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET",
+										"requestTimeout": ""
+									},
+									"formatSettings": {
+										"type": "JsonReadSettings"
+									}
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "RestAPIDataset",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Output",
+									"type": "DatasetReference",
+									"parameters": {
+										"FilePath": {
+											"value": "intern-project-container/@{item()}.json",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"CountryList": {
+				"type": "array",
+				"defaultValue": [
+					"india",
+					"us",
+					"uk",
+					"china",
+					"russia"
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-07-18T15:03:28Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

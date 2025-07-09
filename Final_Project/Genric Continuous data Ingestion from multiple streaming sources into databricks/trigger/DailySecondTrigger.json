@@ -1,0 +1,42 @@
+{
+	"name": "DailySecondTrigger",
+	"properties": {
+		"description": "Trigger for execution at afternoon",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "FetchCountryDataPipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"CountryList": [
+						"india",
+						"us",
+						"uk",
+						"china",
+						"russia"
+					]
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2024-07-19T12:00:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						12
+					]
+				}
+			}
+		}
+	}
+}

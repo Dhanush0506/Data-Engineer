@@ -1,0 +1,71 @@
+{
+	"name": "ProductPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "CheckIfCustomerCountMoreThan600",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(pipeline().parameters.CustomerCount, 600)\n",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "CopyProductData",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceProductDataset",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SinkProductDataset",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"CustomerCount": {
+				"type": "int"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-07-20T03:17:54Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

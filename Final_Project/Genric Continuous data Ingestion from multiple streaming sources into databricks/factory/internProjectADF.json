@@ -1,0 +1,9 @@
+{
+	"name": "internProjectADF",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6a56435a-fac9-4198-83ca-86fa9a5a8eff",
+		"tenantId": "964a38ae-c7cb-4d4f-a041-0b62ca11ac74"
+	}
+}
