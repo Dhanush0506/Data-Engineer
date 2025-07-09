@@ -4,7 +4,6 @@
 - [📌 Introduction](#introduction)
 - [🎯 Project Objectives](#project-objectives)
 - [⚙️ Setup Instructions](#setup-instructions)
-- [📁 Folder Structure](#folder-structure)
 - [🚀 Usage Scenarios](#usage-scenarios)
 - [🧾 Conclusion](#conclusion)
 
@@ -72,33 +71,6 @@ cd ADF-Pipelines
 2. Import the JSON files under the `ADF/` folder.
 3. Update connection strings, credentials, and dataset paths to match your environment.
 4. Publish the factory and validate pipelines.
-
----
-
-## 📁 Folder Structure
-
-```
-ADF-Pipelines/
-│
-├── ADF/
-│   ├── Pipelines/
-│   │   ├── FetchCountriesPipeline.json
-│   │   ├── CopyCustomerDataPipeline.json
-│   │   ├── CopyProductDataPipeline.json
-│   ├── Triggers/
-│   │   ├── FetchCountriesTrigger.json
-│   ├── DataSets/
-│   │   ├── CountryDataSet.json
-│   │   ├── CustomerDataSet.json
-│   │   └── ProductDataSet.json
-│   ├── LinkedServices/
-│   │   ├── RestAPIService.json
-│   │   ├── AzureSQLDatabase.json
-│   │   └── ADLS_LinkedService.json
-│
-├── README.md
-└── ...
-```
 
 ---
 
