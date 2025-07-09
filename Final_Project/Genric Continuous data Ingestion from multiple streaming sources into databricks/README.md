@@ -1,55 +1,83 @@
-Azure Data Factory Project
-Table of Contents
-Introduction
-Tasks
-Setup Instructions
-Folder Structure
-Usage Examples
-Conclusion
-Introduction
-Hi Viewer! I hope you are doing well.
+# 💠 Azure Data Factory Project – Internship Final Report
 
-This project showcases my work on Azure Data Factory, where I accomplished the following tasks:
+## 📚 Table of Contents
+- [📌 Introduction](#introduction)
+- [🎯 Project Objectives](#project-objectives)
+- [⚙️ Setup Instructions](#setup-instructions)
+- [📁 Folder Structure](#folder-structure)
+- [🚀 Usage Scenarios](#usage-scenarios)
+- [🧾 Conclusion](#conclusion)
 
-Fetch Country Data: Created a pipeline to fetch data for 5 countries (India, US, UK, China, Russia) from the Rest API and save it as JSON files, with filenames matching the country names.
-Automated Trigger: Added a trigger to the above pipeline to run it twice daily at 12:00 AM and 12:00 PM IST.
-Conditional Data Copy: Created a pipeline to copy customer data from a database to Azure Data Lake Storage (ADLS) only if the record count is more than 500. If the customer record count exceeds 600, a child pipeline is triggered to copy product data from the table.
-Pipeline Parameterization: Designed the pipelines to pass the customer count to the child product pipeline via pipeline parameters.
-I have implemented this project within a single Data Factory, creating appropriate Linked Services, Containers, Datasets, Pipelines, Triggers, and Activities. I also parameterized values that were repeated.
+---
 
-Tasks
-Fetch Country Data Pipeline
+## 📌 Introduction
 
-Fetch data for India, US, UK, China, and Russia from the Rest API.
-Save data in separate JSON files named after each country.
-Automated Trigger
+Hi there! 👋
 
-Set up a trigger to run the Fetch Country Data Pipeline at 12:00 AM and 12:00 PM IST daily.
-Conditional Data Copy Pipeline
+Welcome to my Azure Data Factory internship project. This repository highlights my practical experience building real-world data pipelines using Azure Data Factory (ADF). The focus was on automating data integration tasks, implementing conditional logic, and using parameterized pipelines for scalable and maintainable ETL workflows.
 
-Copy customer data to ADLS if the record count is more than 500.
-Trigger a child pipeline to copy product data if the customer record count exceeds 600.
-Parameterization
+---
 
-Pass the customer count from the parent pipeline to the child product pipeline using pipeline parameters.
-Setup Instructions
-Prerequisites
+## 🎯 Project Objectives
 
-Azure subscription.
-Azure Data Factory instance.
-Access to GitHub.
-Clone the Repository
+### ✅ 1. Fetch Country Data via REST API
+- Created a pipeline to fetch data for the following countries:
+  - India 🇮🇳
+  - United States 🇺🇸
+  - United Kingdom 🇬🇧
+  - China 🇨🇳
+  - Russia 🇷🇺
+- Stored the data in **JSON files** in Azure Data Lake Storage (ADLS), with filenames based on each country.
 
-sh
-Copy code
+### ✅ 2. Automated Trigger
+- Configured a **trigger** to run the Fetch Country Data pipeline **twice daily**:
+  - ⏰ 12:00 AM IST
+  - ⏰ 12:00 PM IST
+
+### ✅ 3. Conditional Data Copy
+- Built a pipeline to:
+  - Copy **customer data** to ADLS **only if** record count > 500.
+  - If record count > 600, **triggered a child pipeline** to also copy **product data**.
+
+### ✅ 4. Pipeline Parameterization
+- Passed the **customer record count** from the parent pipeline to the child pipeline using **pipeline parameters**, enabling dynamic execution logic.
+
+### ✅ 5. ADF Components Setup
+- Created and configured the following within a single ADF instance:
+  - Linked Services
+  - Datasets
+  - Pipelines
+  - Triggers
+  - Parameterized activities
+
+---
+
+## ⚙️ Setup Instructions
+
+### 🔧 Prerequisites
+- Azure Subscription
+- Azure Data Factory (v2) instance
+- Access to Azure Data Lake Storage
+- Git installed (optional for cloning)
+
+### 📥 Clone the Repository
+
+```bash
 git clone https://github.com/YOUR_USERNAME/ADF-Pipelines.git
 cd ADF-Pipelines
-Configure Azure Data Factory
+```
 
-Set up Linked Services, Datasets, and Pipelines as per the JSON files in the repository.
-Ensure you have the necessary permissions and access to the required data sources.
-Folder Structure
-Copy code
+### 🛠 Configure in Azure Data Factory
+1. Open [Azure Data Factory Studio](https://adf.azure.com).
+2. Import the JSON files under the `ADF/` folder.
+3. Update connection strings, credentials, and dataset paths to match your environment.
+4. Publish the factory and validate pipelines.
+
+---
+
+## 📁 Folder Structure
+
+```
 ADF-Pipelines/
 │
 ├── ADF/
@@ -57,23 +85,53 @@ ADF-Pipelines/
 │   │   ├── FetchCountriesPipeline.json
 │   │   ├── CopyCustomerDataPipeline.json
 │   │   ├── CopyProductDataPipeline.json
-│   │   └── ...
 │   ├── Triggers/
 │   │   ├── FetchCountriesTrigger.json
-│   │   └── ...
 │   ├── DataSets/
-│   │   └── ...
+│   │   ├── CountryDataSet.json
+│   │   ├── CustomerDataSet.json
+│   │   └── ProductDataSet.json
 │   ├── LinkedServices/
-│   │   └── ...
-│   └── ...
+│   │   ├── RestAPIService.json
+│   │   ├── AzureSQLDatabase.json
+│   │   └── ADLS_LinkedService.json
+│
 ├── README.md
 └── ...
-Usage Examples
-Running the Fetch Country Data Pipeline: This pipeline automatically runs at the scheduled times to fetch and save country data.
-Conditional Data Copy Pipeline: This pipeline only copies customer data if the record count exceeds 500 and triggers the child pipeline if the count is above 600.
-Conclusion
-I have put a lot of effort into this project, applying all the knowledge gained during my internship and through my own research. I am happy to share my work and would love to answer any queries you might have.
+```
 
-Thank you!
+---
 
-Riya
+## 🚀 Usage Scenarios
+
+### 🌍 Fetch Country Data
+- The pipeline fetches country data from the REST API and stores it in ADLS.
+- Runs automatically via the time-based trigger twice a day.
+
+### 📈 Conditional Data Copy
+- The customer data copy pipeline runs only if the record count > 500.
+- If count > 600, it triggers a child pipeline to also copy product data.
+
+### 🔁 Parameter Passing
+- Dynamically passes customer count from the parent pipeline to the child pipeline using **pipeline parameters**.
+
+---
+
+## 🧾 Conclusion
+
+This internship project helped me gain hands-on experience with:
+- Real-world data integration scenarios using Azure Data Factory
+- Designing scalable and reusable pipelines
+- Automating ETL processes via triggers
+- Implementing conditional logic using lookup and IF activities
+- Parameterizing pipelines for modularity
+
+I'm proud to showcase this project as a reflection of the knowledge and skills I've gained during my internship.
+
+---
+
+**👨‍💻 Developed by:**  
+**CV Dhanush**  
+**Data Engineering Intern**
+
+📫 *Feel free to reach out for any questions or collaboration!*
