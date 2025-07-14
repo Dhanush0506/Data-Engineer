@@ -126,7 +126,3 @@ df.filter(col("pickup_unix") > (latest_time - 10))   .groupBy("PULocationID")   
 
 
 
-## 👨‍💻 Author
-
-**Prakash Pandey**  
-[LinkedIn](https://www.linkedin.com/in/prakash-pandey-2827522b1/)
