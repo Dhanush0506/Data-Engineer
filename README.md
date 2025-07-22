@@ -12,6 +12,7 @@ Each folder is organized by the week of the assignment:
 - `CVDhanush_Assignment5/` – Week 5
 - `CVDhanush_Assignment6/` – Week 6
 - `CVDhanush_Assignment7/` – Week 7
+- `CVDhanush_Assignment8/` – Week 8
 ---
 
 each week includes **hands-on tasks** focused on key tools and concepts such as:
